@@ -28,7 +28,7 @@ function AddNews() {
     try {
 
       await axios.post(
-        "http://localhost:5000/api/news/add",
+        "https://village-project-z9kk.onrender.com",
         {
           title,
           category,

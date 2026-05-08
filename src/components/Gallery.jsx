@@ -25,7 +25,7 @@ function Gallery() {
     try {
 
       const res = await axios.get(
-        "http://localhost:5000/api/gallery"
+        "https://village-project-z9kk.onrender.com"
       );
 
       setGalleryData(res.data);

@@ -35,7 +35,7 @@ function AdminDashboard() {
 
   useEffect(() => {
 
-    fetch("http://localhost:5000/api/news")
+    fetch("https://village-project-z9kk.onrender.com")
       .then((res) => res.json())
       .then((data) => {
 
@@ -54,7 +54,7 @@ function AdminDashboard() {
 
   useEffect(() => {
 
-    fetch("http://localhost:5000/api/gallery")
+    fetch("https://village-project-z9kk.onrender.com")
       .then((res) => res.json())
       .then((data) => {
 

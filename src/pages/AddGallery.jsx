@@ -60,7 +60,7 @@ function AddGallery() {
     try {
 
       await axios.post(
-        "http://localhost:5000/api/gallery/add",
+        "https://village-project-z9kk.onrender.com",
         formData
       );
 
