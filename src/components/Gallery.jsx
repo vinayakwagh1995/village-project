@@ -12,6 +12,11 @@ function Gallery() {
   const [currentIndex, setCurrentIndex] =
     useState(0);
 
+  /* API URL */
+
+  const API =
+    "https://village-project-z9kk.onrender.com";
+
   /* Fetch Gallery */
 
   useEffect(() => {
@@ -25,7 +30,7 @@ function Gallery() {
     try {
 
       const res = await axios.get(
-        "https://village-project-z9kk.onrender.com"
+        `${API}/api/gallery`
       );
 
       setGalleryData(res.data);
@@ -37,29 +42,6 @@ function Gallery() {
     }
 
   };
-
-  /* Group Category Photos */
-
-  const groupedGallery = {};
-
-  galleryData.forEach((item) => {
-
-    if (!groupedGallery[item.category]) {
-
-      groupedGallery[item.category] = [];
-
-    }
-
-    const photos =
-      JSON.parse(item.images || "[]");
-
-    photos.forEach((photo) => {
-
-      groupedGallery[item.category].push(photo);
-
-    });
-
-  });
 
   /* Open Gallery */
 
@@ -79,7 +61,7 @@ function Gallery() {
 
   };
 
-  /* Next */
+  /* Next Image */
 
   const nextImage = () => {
 
@@ -93,7 +75,7 @@ function Gallery() {
 
   };
 
-  /* Prev */
+  /* Previous Image */
 
   const prevImage = () => {
 
@@ -137,92 +119,61 @@ function Gallery() {
 
         <div className="row">
 
-          {Object.keys(groupedGallery).map(
-            (category, index) => {
+          {galleryData.map((item, index) => (
 
-              const photos =
-                groupedGallery[category];
+            <div
+              className="col-lg-4 col-md-6 mb-4"
+              key={index}
+            >
 
-              const coverImage =
-                `http://localhost:5000/uploads/${photos[0]}`;
+              <div
+                className="photo-item"
+                onClick={() =>
+                  openGallery(item)
+                }
+              >
 
-              return (
+                {/* Cover Image */}
 
-                <div
-                  className="col-lg-4 col-md-6 mb-4"
-                  key={index}
-                >
+                <img
+                  src={`${API}/uploads/${item.photos[0]}`}
+                  alt=""
+                  className="img-fluid"
+                />
 
-                  <div
-                    className="photo-item"
-                    onClick={() =>
-                      openGallery({
-                        category,
-                        photos,
-                      })
-                    }
-                  >
+                {/* Overlay */}
 
-                    {/* Image */}
+                <div className="photo-overlay">
 
-                    <img
-                      src={coverImage}
-                      alt=""
-                      className="img-fluid"
-                    />
+                  <div className="overlay-icon">
 
-                    {/* Overlay */}
-
-                    <div className="photo-overlay">
-
-                      {/* Icon */}
-
-                      <div className="overlay-icon">
-
-                        <i className="fas fa-images"></i>
-
-                      </div>
-
-                      {/* Category */}
-
-                      <h5>
-                        {category}
-                      </h5>
-
-                      {/* Count */}
-
-                      <span className="photo-count">
-
-                        +{photos.length} Photos
-
-                      </span>
-
-                      {/* View More */}
-
-                      <p className="view-more-text">
-
-                        View More Photos
-
-                      </p>
-
-                    </div>
+                    <i className="fas fa-images"></i>
 
                   </div>
 
+                  <h5>
+                    {item.title}
+                  </h5>
+
+                  <span className="photo-count">
+
+                    +{item.photos.length} Photos
+
+                  </span>
+
                 </div>
 
-              );
+              </div>
 
-            }
-          )}
+            </div>
+
+          ))}
 
         </div>
 
       </div>
 
-      {/* ==========================
-          FULLSCREEN GALLERY
-      ========================== */}
+      {/* FULLSCREEN VIEWER */}
 
       {selectedGallery && (
 
@@ -239,45 +190,14 @@ function Gallery() {
 
           </button>
 
-          {/* Left Preview */}
-
-          <img
-            src={`http://localhost:5000/uploads/${
-              selectedGallery.photos[
-                currentIndex === 0
-                  ? selectedGallery.photos.length - 1
-                  : currentIndex - 1
-              ]
-            }`}
-            alt=""
-            className="side-image left-side"
-            onClick={prevImage}
-          />
-
           {/* Main Image */}
 
           <img
-            src={`http://localhost:5000/uploads/${
+            src={`${API}/uploads/${
               selectedGallery.photos[currentIndex]
             }`}
             alt=""
             className="viewer-image"
-          />
-
-          {/* Right Preview */}
-
-          <img
-            src={`http://localhost:5000/uploads/${
-              selectedGallery.photos[
-                currentIndex ===
-                selectedGallery.photos.length - 1
-                  ? 0
-                  : currentIndex + 1
-              ]
-            }`}
-            alt=""
-            className="side-image right-side"
-            onClick={nextImage}
           />
 
           {/* Left Arrow */}

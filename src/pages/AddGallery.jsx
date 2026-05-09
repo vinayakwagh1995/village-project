@@ -59,10 +59,10 @@ function AddGallery() {
 
     try {
 
-      await axios.post(
-        "https://village-project-z9kk.onrender.com",
-        formData
-      );
+      axios.post(
+  "https://village-project-z9kk.onrender.com/api/gallery-add",
+  formData
+);
 
       alert(
         "Gallery Added Successfully"

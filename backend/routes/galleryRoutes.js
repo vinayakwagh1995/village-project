@@ -1,24 +1,35 @@
 import express from "express";
 
-import upload from "../multer.js";
-
-import {
-  addGallery,
-  getGallery,
-} from "../controllers/galleryController.js";
-
 const router = express.Router();
 
-/* Add Gallery */
+/* Temporary Data */
 
-router.post(
-  "/add",
-  upload.array("images", 20),
-  addGallery
-);
+let galleryData = [];
 
-/* Get Gallery */
+/* GET */
 
-router.get("/", getGallery);
+router.get("/gallery", (req, res) => {
+
+  res.json(galleryData);
+
+});
+
+/* POST */
+
+router.post("/gallery-add", (req, res) => {
+
+  const newGallery = {
+    title: req.body.title,
+    photos: req.body.photos || [],
+  };
+
+  galleryData.push(newGallery);
+
+  res.json({
+    success: true,
+    message: "Gallery Added",
+  });
+
+});
 
 export default router;

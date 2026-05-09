@@ -28,15 +28,15 @@ function AddNews() {
     try {
 
       await axios.post(
-        "https://village-project-z9kk.onrender.com",
-        {
-          title,
-          category,
-          description,
-          date:
-            new Date().toLocaleDateString(),
-        }
-      );
+  "https://village-project-z9kk.onrender.com/api/news-add",
+  {
+    title,
+    category,
+    description,
+    date:
+      new Date().toLocaleDateString(),
+  }
+);
 
       alert(
         "News Added Successfully"

@@ -1,46 +1,33 @@
-import db from "../db.js";
+import News from "../models/News.js";
 
-export const addNews = (req, res) => {
+/* Get News */
 
-  const {
-    title,
-    category,
-    description,
-    date,
-  } = req.body;
+export const getNews = async (req, res) => {
+  try {
+    const news = await News.find().sort({
+      createdAt: -1,
+    });
 
-  const sql =
-    "INSERT INTO news (title, category, description, date) VALUES (?, ?, ?, ?)";
-
-  db.query(
-    sql,
-    [title, category, description, date],
-    (err, result) => {
-
-      if (err) {
-        return res.status(500).json(err);
-      }
-
-      res.json({
-        message: "News Added",
-      });
-
-    }
-  );
+    res.json(news);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 };
 
-export const getNews = (req, res) => {
+/* Add News */
 
-  const sql =
-    "SELECT * FROM news ORDER BY id DESC";
+export const addNews = async (req, res) => {
+  try {
+    const news = new News(req.body);
 
-  db.query(sql, (err, result) => {
+    await news.save();
 
-    if (err) {
-      return res.status(500).json(err);
-    }
-
-    res.json(result);
-
-  });
+    res.json(news);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 };

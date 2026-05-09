@@ -12,6 +12,11 @@ function News() {
   const [loading, setLoading] =
     useState(true);
 
+  /* API */
+
+  const API =
+    "https://village-project-z9kk.onrender.com";
+
   /* Fetch News */
 
   useEffect(() => {
@@ -25,7 +30,7 @@ function News() {
     try {
 
       const res = await axios.get(
-        "https://village-project-z9kk.onrender.com"
+        `${API}/api/news`
       );
 
       setNewsData(res.data);
@@ -77,9 +82,7 @@ function News() {
 
           <div className="text-center py-5">
 
-            <div
-              className="spinner-border text-primary"
-            ></div>
+            <div className="spinner-border text-primary"></div>
 
           </div>
 
@@ -87,16 +90,14 @@ function News() {
 
           <div className="row">
 
-            {newsData.map((news) => (
+            {newsData.map((news, index) => (
 
               <div
                 className="col-lg-4 col-md-6 mb-4"
-                key={news.id}
+                key={index}
               >
 
                 <div className="news-card h-100">
-
-                  {/* Card Body */}
 
                   <div className="card-body d-flex flex-column">
 
@@ -130,7 +131,7 @@ function News() {
 
                     <p className="card-text flex-grow-1">
 
-                      {news.description.length > 120
+                      {news.description?.length > 120
 
                         ? `${news.description.substring(0, 120)}...`
 
@@ -167,9 +168,7 @@ function News() {
 
       </div>
 
-      {/* ======================
-          POPUP MODAL
-      ======================= */}
+      {/* MODAL */}
 
       {selectedNews && (
 

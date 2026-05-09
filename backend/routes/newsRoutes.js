@@ -1,16 +1,30 @@
 import express from "express";
 
-import {
-  addNews,
-  getNews,
-} from "../controllers/newsController.js";
-
 const router = express.Router();
 
-// Get All News
-router.get("/", getNews);
+/* Temporary Data */
 
-// Add News
-router.post("/add", addNews);
+let newsData = [];
+
+/* GET */
+
+router.get("/news", (req, res) => {
+
+  res.json(newsData);
+
+});
+
+/* POST */
+
+router.post("/news-add", (req, res) => {
+
+  newsData.push(req.body);
+
+  res.json({
+    success: true,
+    message: "News Added",
+  });
+
+});
 
 export default router;
