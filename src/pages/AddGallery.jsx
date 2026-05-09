@@ -12,9 +12,6 @@ function AddGallery() {
   const navigate =
     useNavigate();
 
-  const [title, setTitle] =
-    useState("");
-
   const [
     category,
     setCategory,
@@ -28,10 +25,10 @@ function AddGallery() {
 
   /* API */
 
-const API =
-  "https://village-project-z9kk.onrender.com";
+  const API =
+    "https://village-project-z9kk.onrender.com";
 
-  /* Submit */
+  /* SUBMIT */
 
   const handleSubmit = async (e) => {
 
@@ -44,21 +41,14 @@ const API =
       const formData =
         new FormData();
 
-      /* Title */
+      /* CATEGORY AS TITLE */
 
       formData.append(
         "title",
-        title
-      );
-
-      /* Category */
-
-      formData.append(
-        "category",
         category
       );
 
-      /* Photos */
+      /* PHOTOS */
 
       for (
         let i = 0;
@@ -73,7 +63,7 @@ const API =
 
       }
 
-      /* Upload */
+      /* UPLOAD */
 
       const res =
         await axios.post(
@@ -96,8 +86,6 @@ const API =
       alert(
         "Gallery Added Successfully"
       );
-
-      setTitle("");
 
       setCategory("");
 
@@ -129,7 +117,7 @@ const API =
 
       <div className="container">
 
-        {/* Header */}
+        {/* HEADER */}
 
         <div className="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-5">
 
@@ -151,7 +139,7 @@ const API =
 
           </div>
 
-          {/* Buttons */}
+          {/* BUTTONS */}
 
           <div className="d-flex gap-3 flex-wrap">
 
@@ -181,53 +169,31 @@ const API =
 
         </div>
 
-        {/* Form */}
+        {/* FORM */}
 
         <form
           onSubmit={handleSubmit}
           style={{
             background:
               "#ffffff",
+
             padding: "30px",
+
             borderRadius:
               "25px",
+
             boxShadow:
               "0 5px 20px rgba(0,0,0,0.08)",
           }}
         >
 
-          {/* Title */}
+          {/* CATEGORY */}
 
           <div className="mb-4">
 
             <label className="form-label fw-bold">
 
-              Gallery Title
-
-            </label>
-
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Enter Gallery Title"
-              value={title}
-              onChange={(e) =>
-                setTitle(
-                  e.target.value
-                )
-              }
-              required
-            />
-
-          </div>
-
-          {/* Category */}
-
-          <div className="mb-4">
-
-            <label className="form-label fw-bold">
-
-              Select Category
+              Select Gallery Section
 
             </label>
 
@@ -243,7 +209,7 @@ const API =
             >
 
               <option value="">
-                Select Category
+                Select Section
               </option>
 
               <option value="गावाचे सुंदर दृश्य">
@@ -262,7 +228,7 @@ const API =
 
           </div>
 
-          {/* Upload Photos */}
+          {/* PHOTOS */}
 
           <div className="mb-4">
 
@@ -286,7 +252,49 @@ const API =
 
           </div>
 
-          {/* Button */}
+          {/* PREVIEW */}
+
+          {images.length > 0 && (
+
+            <div className="row mb-4">
+
+              {images.map(
+                (
+                  image,
+                  index
+                ) => (
+
+                  <div
+                    className="col-lg-3 col-md-4 col-6 mb-3"
+                    key={index}
+                  >
+
+                    <img
+                      src={URL.createObjectURL(image)}
+                      alt=""
+                      className="img-fluid rounded"
+                      style={{
+                        height:
+                          "150px",
+
+                        width:
+                          "100%",
+
+                        objectFit:
+                          "cover",
+                      }}
+                    />
+
+                  </div>
+
+                )
+              )}
+
+            </div>
+
+          )}
+
+          {/* BUTTON */}
 
           <button
             type="submit"
@@ -295,7 +303,9 @@ const API =
           >
 
             {loading
+
               ? "Uploading..."
+
               : "Upload Photos"}
 
           </button>
