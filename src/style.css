@@ -1971,14 +1971,17 @@ section {
    FULLSCREEN GALLERY
 ==================================== */
 
+/* ====================================
+   FULLSCREEN GALLERY VIEWER
+==================================== */
+
 .gallery-viewer {
 
   position: fixed;
 
   inset: 0;
 
-  background:
-    rgba(0,0,0,0.96);
+  background: rgba(0,0,0,0.96);
 
   display: flex;
 
@@ -2016,7 +2019,7 @@ section {
   transition: 0.3s;
 }
 
-/* Side Images */
+/* Side Preview Images */
 
 .side-image {
 
@@ -2044,7 +2047,9 @@ section {
   transform: scale(1.04);
 }
 
-/* Arrows */
+/* ====================================
+   ARROWS
+==================================== */
 
 .gallery-arrow {
 
@@ -2096,7 +2101,9 @@ section {
   right: 20px;
 }
 
-/* Close */
+/* ====================================
+   CLOSE BUTTON
+==================================== */
 
 .close-gallery {
 
@@ -2116,6 +2123,13 @@ section {
   cursor: pointer;
 
   z-index: 999999;
+
+  transition: 0.3s;
+}
+
+.close-gallery:hover {
+
+  transform: scale(1.1);
 }
 
 /* ====================================
@@ -2162,7 +2176,9 @@ section {
   transform: scale(1.08);
 }
 
-/* Overlay */
+/* ====================================
+   OVERLAY
+==================================== */
 
 .photo-overlay {
 
@@ -2230,7 +2246,7 @@ section {
   transform: scale(1.12);
 }
 
-/* Title */
+/* Overlay Text */
 
 .photo-overlay h5 {
 
@@ -2241,8 +2257,6 @@ section {
   margin-bottom: 8px;
 }
 
-/* Count */
-
 .photo-count {
 
   font-size: 15px;
@@ -2251,8 +2265,6 @@ section {
 
   opacity: 0.9;
 }
-
-/* View More */
 
 .view-more-text {
 
@@ -2315,57 +2327,8 @@ section {
 }
 
 /* ====================================
-   MOBILE
-==================================== */
-
-@media (max-width: 768px) {
-
-  .photo-item img {
-
-    height: 320px;
-  }
-
-  .viewer-image {
-
-    max-width: 94vw;
-
-    max-height: 72vh;
-  }
-
-  .side-image {
-
-    display: none;
-  }
-
-  .gallery-arrow {
-
-    width: 46px;
-    height: 46px;
-
-    font-size: 22px;
-  }
-
-  .left-arrow {
-
-    left: 8px;
-  }
-
-  .right-arrow {
-
-    right: 8px;
-  }
-
-  .close-gallery {
-
-    top: 10px;
-    right: 14px;
-
-    font-size: 38px;
-  }
-
-}/* ==================================
    MOBILE RESPONSIVE
-================================== */
+==================================== */
 
 @media (max-width: 768px) {
 
@@ -2376,8 +2339,6 @@ section {
     padding: 15px;
   }
 
-  /* Main */
-
   .viewer-image {
 
     max-width: 94vw;
@@ -2387,14 +2348,10 @@ section {
     border-radius: 18px;
   }
 
-  /* Hide Side Preview */
-
   .side-image {
 
     display: none;
   }
-
-  /* Arrows */
 
   .gallery-arrow {
 
@@ -2414,8 +2371,6 @@ section {
     right: 8px;
   }
 
-  /* Close */
-
   .close-gallery {
 
     top: 10px;
@@ -2424,7 +2379,13 @@ section {
     font-size: 38px;
   }
 
-}/* ===================================
+  .photo-item img {
+
+    height: 320px;
+  }
+
+}
+/* ===================================
    REELS SECTION
 =================================== */
 
