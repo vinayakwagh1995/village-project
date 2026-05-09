@@ -15,13 +15,11 @@ app.use("/api", galleryRoutes);
 app.use("/api", newsRoutes);
 
 app.get("/", (req, res) => {
-
   res.send("API Running");
-
 });
 
-app.listen(5000, () => {
+const PORT = 5000;
 
-  console.log("Server running");
-
+app.listen(PORT, () => {
+  console.log(`Server running on ${PORT}`);
 });
