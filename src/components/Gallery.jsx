@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import axios from "axios";
 
 function Gallery() {
@@ -12,7 +13,7 @@ function Gallery() {
   const [currentIndex, setCurrentIndex] =
     useState(0);
 
-  /* API URL */
+  /* API */
 
   const API =
     "https://village-project-z9kk.onrender.com";
@@ -29,11 +30,27 @@ function Gallery() {
 
     try {
 
-      const res = await axios.get(
-        `${API}/api/gallery`
-      );
+      const res =
+        await axios.get(
+          `${API}/api/gallery`
+        );
 
-      setGalleryData(res.data);
+      /* Remove Invalid Data */
+
+      const validData =
+        res.data.filter(
+          (item) =>
+
+            item &&
+            item.title &&
+            Array.isArray(
+              item.photos
+            ) &&
+            item.photos.length > 0
+
+        );
+
+      setGalleryData(validData);
 
     } catch (error) {
 
@@ -45,9 +62,18 @@ function Gallery() {
 
   /* Open Gallery */
 
-  const openGallery = (gallery) => {
+  const openGallery = (
+    gallery
+  ) => {
 
-    setSelectedGallery(gallery);
+    if (
+      !gallery?.photos?.length
+    )
+      return;
+
+    setSelectedGallery(
+      gallery
+    );
 
     setCurrentIndex(0);
 
@@ -65,10 +91,20 @@ function Gallery() {
 
   const nextImage = () => {
 
+    if (
+      !selectedGallery
+        ?.photos?.length
+    )
+      return;
+
     setCurrentIndex((prev) =>
 
-      prev === selectedGallery.photos.length - 1
+      prev ===
+      selectedGallery
+        .photos.length - 1
+
         ? 0
+
         : prev + 1
 
     );
@@ -79,10 +115,19 @@ function Gallery() {
 
   const prevImage = () => {
 
+    if (
+      !selectedGallery
+        ?.photos?.length
+    )
+      return;
+
     setCurrentIndex((prev) =>
 
       prev === 0
-        ? selectedGallery.photos.length - 1
+
+        ? selectedGallery
+            .photos.length - 1
+
         : prev - 1
 
     );
@@ -91,7 +136,10 @@ function Gallery() {
 
   return (
 
-    <section id="gallery" className="py-5">
+    <section
+      id="gallery"
+      className="py-5"
+    >
 
       <div className="container">
 
@@ -109,7 +157,8 @@ function Gallery() {
 
           <p className="text-muted">
 
-            गावातील सुंदर क्षण आणि आठवणी
+            गावातील सुंदर क्षण
+            आणि आठवणी
 
           </p>
 
@@ -119,55 +168,107 @@ function Gallery() {
 
         <div className="row">
 
-          {galleryData.map((item, index) => (
+          {galleryData.length >
+          0 ? (
 
-            <div
-              className="col-lg-4 col-md-6 mb-4"
-              key={index}
-            >
+            galleryData.map(
+              (
+                item,
+                index
+              ) => (
 
-              <div
-                className="photo-item"
-                onClick={() =>
-                  openGallery(item)
-                }
-              >
+                <div
+                  className="col-lg-4 col-md-6 mb-4"
+                  key={index}
+                >
 
-                {/* Cover Image */}
+                  <div
+                    className="photo-item"
+                    onClick={() =>
+                      openGallery(
+                        item
+                      )
+                    }
+                    style={{
+                      cursor:
+                        "pointer",
+                    }}
+                  >
 
-                <img
-                  src={`${API}/uploads/${item.photos[0]}`}
-                  alt=""
-                  className="img-fluid"
-                />
+                    {/* Cover Image */}
 
-                {/* Overlay */}
+                    <img
+                      src={
+                        item
+                          ?.photos?.[0]
 
-                <div className="photo-overlay">
+                          ? `${API}/uploads/${item.photos[0]}`
 
-                  <div className="overlay-icon">
+                          : "https://via.placeholder.com/400x300"
+                      }
+                      alt=""
+                      className="img-fluid rounded"
+                      style={{
+                        height:
+                          "250px",
+                        width:
+                          "100%",
+                        objectFit:
+                          "cover",
+                      }}
+                    />
 
-                    <i className="fas fa-images"></i>
+                    {/* Overlay */}
+
+                    <div className="photo-overlay">
+
+                      <div className="overlay-icon">
+
+                        <i className="fas fa-images"></i>
+
+                      </div>
+
+                      <h5>
+
+                        {item?.title ||
+                          "Gallery"}
+
+                      </h5>
+
+                      <span className="photo-count">
+
+                        +
+                        {item
+                          ?.photos
+                          ?.length ||
+                          0}{" "}
+
+                        Photos
+
+                      </span>
+
+                    </div>
 
                   </div>
 
-                  <h5>
-                    {item.title}
-                  </h5>
-
-                  <span className="photo-count">
-
-                    +{item.photos.length} Photos
-
-                  </span>
-
                 </div>
 
-              </div>
+              )
+            )
+
+          ) : (
+
+            <div className="text-center py-5">
+
+              <h4>
+
+                No Gallery Found
+
+              </h4>
 
             </div>
 
-          ))}
+          )}
 
         </div>
 
@@ -183,7 +284,9 @@ function Gallery() {
 
           <button
             className="close-gallery"
-            onClick={closeGallery}
+            onClick={
+              closeGallery
+            }
           >
 
             ×
@@ -193,9 +296,21 @@ function Gallery() {
           {/* Main Image */}
 
           <img
-            src={`${API}/uploads/${
-              selectedGallery.photos[currentIndex]
-            }`}
+            src={
+              selectedGallery
+                ?.photos?.[
+                currentIndex
+              ]
+
+                ? `${API}/uploads/${
+                    selectedGallery
+                      .photos[
+                      currentIndex
+                    ]
+                  }`
+
+                : "https://via.placeholder.com/600x400"
+            }
             alt=""
             className="viewer-image"
           />
@@ -204,7 +319,9 @@ function Gallery() {
 
           <button
             className="gallery-arrow left-arrow"
-            onClick={prevImage}
+            onClick={
+              prevImage
+            }
           >
 
             ❮
@@ -215,7 +332,9 @@ function Gallery() {
 
           <button
             className="gallery-arrow right-arrow"
-            onClick={nextImage}
+            onClick={
+              nextImage
+            }
           >
 
             ❯

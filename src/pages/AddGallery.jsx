@@ -9,19 +9,27 @@ import {
 
 function AddGallery() {
 
-  const navigate = useNavigate();
+  const navigate =
+    useNavigate();
 
   const [title, setTitle] =
     useState("");
 
-  const [category, setCategory] =
-    useState("");
+  const [
+    category,
+    setCategory,
+  ] = useState("");
 
   const [images, setImages] =
     useState([]);
 
   const [loading, setLoading] =
     useState(false);
+
+  /* API */
+
+const API =
+  "https://village-project-z9kk.onrender.com";
 
   /* Submit */
 
@@ -31,38 +39,59 @@ function AddGallery() {
 
     setLoading(true);
 
-    const formData =
-      new FormData();
-
-    formData.append(
-      "title",
-      title
-    );
-
-    formData.append(
-      "category",
-      category
-    );
-
-    for (
-      let i = 0;
-      i < images.length;
-      i++
-    ) {
-
-      formData.append(
-        "images",
-        images[i]
-      );
-
-    }
-
     try {
 
-      axios.post(
-  "https://village-project-z9kk.onrender.com/api/gallery-add",
-  formData
-);
+      const formData =
+        new FormData();
+
+      /* Title */
+
+      formData.append(
+        "title",
+        title
+      );
+
+      /* Category */
+
+      formData.append(
+        "category",
+        category
+      );
+
+      /* Photos */
+
+      for (
+        let i = 0;
+        i < images.length;
+        i++
+      ) {
+
+        formData.append(
+          "photos",
+          images[i]
+        );
+
+      }
+
+      /* Upload */
+
+      const res =
+        await axios.post(
+
+          `${API}/api/gallery-add`,
+
+          formData,
+
+          {
+            headers: {
+              "Content-Type":
+                "multipart/form-data",
+            },
+          }
+
+        );
+
+      console.log(res.data);
 
       alert(
         "Gallery Added Successfully"
@@ -83,7 +112,7 @@ function AddGallery() {
       console.log(error);
 
       alert(
-        "Something went wrong"
+        "Upload Failed"
       );
 
     } finally {
@@ -157,9 +186,11 @@ function AddGallery() {
         <form
           onSubmit={handleSubmit}
           style={{
-            background: "#ffffff",
+            background:
+              "#ffffff",
             padding: "30px",
-            borderRadius: "25px",
+            borderRadius:
+              "25px",
             boxShadow:
               "0 5px 20px rgba(0,0,0,0.08)",
           }}
@@ -186,13 +217,6 @@ function AddGallery() {
                 )
               }
               required
-              style={{
-                height: "55px",
-                borderRadius: "15px",
-                background: "#f8f9fa",
-                border:
-                  "1px solid #ddd",
-              }}
             />
 
           </div>
@@ -216,13 +240,6 @@ function AddGallery() {
                 )
               }
               required
-              style={{
-                height: "55px",
-                borderRadius: "15px",
-                background: "#f8f9fa",
-                border:
-                  "1px solid #ddd",
-              }}
             >
 
               <option value="">
@@ -245,7 +262,7 @@ function AddGallery() {
 
           </div>
 
-          {/* Images */}
+          {/* Upload Photos */}
 
           <div className="mb-4">
 
@@ -260,18 +277,11 @@ function AddGallery() {
               multiple
               className="form-control"
               onChange={(e) =>
-                setImages(
-                  e.target.files
-                )
+                setImages([
+                  ...e.target.files,
+                ])
               }
               required
-              style={{
-                padding: "14px",
-                borderRadius: "15px",
-                background: "#f8f9fa",
-                border:
-                  "1px solid #ddd",
-              }}
             />
 
           </div>
@@ -279,24 +289,14 @@ function AddGallery() {
           {/* Button */}
 
           <button
+            type="submit"
             className="btn btn-primary px-5 py-3 rounded-pill"
             disabled={loading}
           >
 
-            {loading ? (
-
-              "Uploading..."
-
-            ) : (
-
-              <>
-                <i className="fas fa-upload me-2"></i>
-
-                Upload Photos
-
-              </>
-
-            )}
+            {loading
+              ? "Uploading..."
+              : "Upload Photos"}
 
           </button>
 

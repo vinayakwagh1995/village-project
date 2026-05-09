@@ -9,9 +9,16 @@ import { Context } from "../main";
 
 function AdminDashboard() {
 
-  const { user } = useContext(Context);
+  const { user } =
+    useContext(Context);
 
-  const navigate = useNavigate();
+  const navigate =
+    useNavigate();
+
+  /* API */
+
+  const API =
+    "https://village-project-z9kk.onrender.com";
 
   /* News Count */
 
@@ -20,8 +27,10 @@ function AdminDashboard() {
 
   /* Gallery Count */
 
-  const [galleryCount, setGalleryCount] =
-    useState(0);
+  const [
+    galleryCount,
+    setGalleryCount,
+  ] = useState(0);
 
   /* Logout */
 
@@ -35,11 +44,18 @@ function AdminDashboard() {
 
   useEffect(() => {
 
-    fetch("https://village-project-z9kk.onrender.com")
+    fetch(`${API}/api/news`)
       .then((res) => res.json())
       .then((data) => {
 
-        setNewsCount(data.length);
+        const validNews =
+          data?.filter(
+            (item) => item
+          ) || [];
+
+        setNewsCount(
+          validNews.length
+        );
 
       })
       .catch((err) => {
@@ -54,22 +70,27 @@ function AdminDashboard() {
 
   useEffect(() => {
 
-    fetch("https://village-project-z9kk.onrender.com")
+    fetch(`${API}/api/gallery`)
       .then((res) => res.json())
       .then((data) => {
 
         let total = 0;
 
-        data.forEach((item) => {
+        data
+          ?.filter(
+            (item) => item
+          )
+          ?.forEach((item) => {
 
-          const photos =
-            JSON.parse(item.images || "[]");
+            total +=
+              item?.photos
+                ?.length || 0;
 
-          total += photos.length;
+          });
 
-        });
-
-        setGalleryCount(total);
+        setGalleryCount(
+          Number(total) || 0
+        );
 
       })
       .catch((err) => {
@@ -103,16 +124,20 @@ function AdminDashboard() {
             <p className="dashboard-subtitle text-muted mb-0">
 
               Welcome back,
+
               <strong>
+
                 {" "}
-                {user?.name || "Admin"}
+                {user?.name ||
+                  "Admin"}
+
               </strong>
 
             </p>
 
           </div>
 
-          {/* Top Buttons */}
+          {/* Buttons */}
 
           <div className="d-flex gap-3 flex-wrap">
 
@@ -128,7 +153,9 @@ function AdminDashboard() {
             </Link>
 
             <button
-              onClick={handleLogout}
+              onClick={
+                handleLogout
+              }
               className="btn btn-danger px-4 py-2 rounded-pill"
             >
 
@@ -304,7 +331,7 @@ function AdminDashboard() {
 
             </div>
 
-            {/* Manage Content */}
+            {/* Manage */}
 
             <div className="col-md-4">
 
@@ -330,6 +357,7 @@ function AdminDashboard() {
     </section>
 
   );
+
 }
 
 export default AdminDashboard;

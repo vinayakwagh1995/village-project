@@ -1,22 +1,70 @@
 import express from "express";
+import News from "../models/News.js";
+import upload from "../middleware/upload.js";
 
 const router = express.Router();
 
-let newsData = [];
+/* GET NEWS */
 
-router.get("/news", (req, res) => {
-  res.json(newsData);
+router.get("/news", async (req, res) => {
+
+  try {
+
+    const news =
+      await News.find().sort({
+        createdAt: -1,
+      });
+
+    res.json(news);
+
+  } catch (error) {
+
+    res.status(500).json({
+      error: error.message,
+    });
+
+  }
+
 });
 
-router.post("/news-add", (req, res) => {
+/* ADD NEWS */
 
-  newsData.push(req.body);
+router.post(
+  "/news-add",
+  upload.single("image"),
+  async (req, res) => {
 
-  res.json({
-    success: true,
-    message: "News Added",
-  });
+    try {
 
-});
+      const newNews = new News({
+
+        title: req.body.title,
+
+        description:
+          req.body.description,
+
+        image: req.file
+          ? req.file.filename
+          : "",
+
+      });
+
+      await newNews.save();
+
+      res.json({
+        success: true,
+        message: "News Added",
+      });
+
+    } catch (error) {
+
+      res.status(500).json({
+        error: error.message,
+      });
+
+    }
+
+  }
+);
 
 export default router;

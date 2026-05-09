@@ -97,15 +97,27 @@ function News() {
                 key={index}
               >
 
-                <div className="news-card h-100">
+                <div className="news-card h-100 shadow-sm rounded-4 overflow-hidden">
 
-                  <div className="card-body d-flex flex-column">
+                  {/* News Image */}
+
+                  <img
+                    src={`${API}/uploads/${news.image}`}
+                    alt=""
+                    className="img-fluid w-100"
+                    style={{
+                      height: "220px",
+                      objectFit: "cover",
+                    }}
+                  />
+
+                  <div className="card-body d-flex flex-column p-4">
 
                     {/* Category */}
 
                     <span className="news-category">
 
-                      {news.category}
+                      {news.category || "Village News"}
 
                     </span>
 
@@ -123,7 +135,9 @@ function News() {
 
                       <i className="fas fa-calendar-alt me-2"></i>
 
-                      {news.date}
+                      {new Date(
+                        news.createdAt
+                      ).toLocaleDateString()}
 
                     </div>
 
@@ -189,11 +203,19 @@ function News() {
 
             </button>
 
+            {/* Image */}
+
+            <img
+              src={`${API}/uploads/${selectedNews.image}`}
+              alt=""
+              className="img-fluid rounded mb-4"
+            />
+
             {/* Category */}
 
             <span className="news-category">
 
-              {selectedNews.category}
+              {selectedNews.category || "Village News"}
 
             </span>
 
@@ -211,7 +233,9 @@ function News() {
 
               <i className="fas fa-calendar-alt me-2"></i>
 
-              {selectedNews.date}
+              {new Date(
+                selectedNews.createdAt
+              ).toLocaleDateString()}
 
             </p>
 
