@@ -17,7 +17,7 @@ function Gallery() {
   const API =
     "https://village-project-z9kk.onrender.com";
 
-  /* Fetch Gallery */
+  /* FETCH GALLERY */
 
   useEffect(() => {
 
@@ -34,7 +34,7 @@ function Gallery() {
           `${API}/api/gallery`
         );
 
-      /* Remove Invalid Data */
+      /* VALID DATA */
 
       const validData =
         res.data.filter(
@@ -49,7 +49,41 @@ function Gallery() {
 
         );
 
-      setGalleryData(validData);
+      /* GROUP SAME TITLES */
+
+      const groupedData = [];
+
+      validData.forEach((item) => {
+
+        const existing =
+          groupedData.find(
+            (g) =>
+              g.title === item.title
+          );
+
+        if (existing) {
+
+          existing.photos.push(
+            ...item.photos
+          );
+
+        } else {
+
+          groupedData.push({
+
+            ...item,
+
+            photos: [
+              ...item.photos,
+            ],
+
+          });
+
+        }
+
+      });
+
+      setGalleryData(groupedData);
 
     } catch (error) {
 
@@ -59,7 +93,7 @@ function Gallery() {
 
   };
 
-  /* Open Gallery */
+  /* OPEN GALLERY */
 
   const openGallery = (
     gallery
@@ -78,7 +112,7 @@ function Gallery() {
 
   };
 
-  /* Close Gallery */
+  /* CLOSE */
 
   const closeGallery = () => {
 
@@ -86,7 +120,7 @@ function Gallery() {
 
   };
 
-  /* Next Image */
+  /* NEXT IMAGE */
 
   const nextImage = () => {
 
@@ -110,7 +144,7 @@ function Gallery() {
 
   };
 
-  /* Previous Image */
+  /* PREVIOUS IMAGE */
 
   const prevImage = () => {
 
@@ -142,7 +176,7 @@ function Gallery() {
 
       <div className="container">
 
-        {/* Heading */}
+        {/* HEADING */}
 
         <div className="text-center mb-5">
 
@@ -163,7 +197,7 @@ function Gallery() {
 
         </div>
 
-        {/* Gallery Grid */}
+        {/* GALLERY GRID */}
 
         <div className="row">
 
@@ -194,30 +228,15 @@ function Gallery() {
                     }}
                   >
 
-                    {/* Cover Image */}
+                    {/* COVER IMAGE */}
 
                     <img
-                      src={
-                        item
-                          ?.photos?.[0]
-
-                          ? `${API}/uploads/${item.photos[0]}`
-
-                          : "https://via.placeholder.com/400x300"
-                      }
+                      src={`${API}/uploads/${item.photos[0]}`}
                       alt=""
                       className="img-fluid rounded"
-                      style={{
-                        height:
-                          "250px",
-                        width:
-                          "100%",
-                        objectFit:
-                          "cover",
-                      }}
                     />
 
-                    {/* Overlay */}
+                    {/* OVERLAY */}
 
                     <div className="photo-overlay">
 
@@ -229,18 +248,14 @@ function Gallery() {
 
                       <h5>
 
-                        {item?.title ||
-                          "Gallery"}
+                        {item.title}
 
                       </h5>
 
                       <span className="photo-count">
 
                         +
-                        {item
-                          ?.photos
-                          ?.length ||
-                          0}{" "}
+                        {item.photos.length}{" "}
 
                         Photos
 
@@ -295,14 +310,11 @@ function Gallery() {
           {/* MAIN IMAGE */}
 
           <img
-            src={
-              `${API}/uploads/${
-                selectedGallery
-                  .photos[
-                  currentIndex
-                ]
-              }`
-            }
+            src={`${API}/uploads/${
+              selectedGallery.photos[
+                currentIndex
+              ]
+            }`}
             alt=""
             className="viewer-image"
           />
