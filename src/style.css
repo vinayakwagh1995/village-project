@@ -1975,166 +1975,25 @@ section {
    FULLSCREEN GALLERY VIEWER
 ==================================== */
 
-.gallery-viewer {
+/* =========================================
+   GALLERY SECTION
+========================================= */
 
-  position: fixed;
-
-  inset: 0;
-
-  background: rgba(0,0,0,0.96);
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  gap: 35px;
-
-  z-index: 99999;
-
-  overflow: hidden;
-
-  padding: 20px;
-}
-
-/* Main Image */
-
-.viewer-image {
-
-  width: auto;
-
-  max-width: 70vw;
-
-  height: auto;
-
-  max-height: 88vh;
-
-  object-fit: contain;
-
-  border-radius: 24px;
-
-  box-shadow:
-    0 0 40px rgba(0,0,0,0.6);
-
-  transition: 0.3s;
-}
-
-/* Side Preview Images */
-
-.side-image {
-
-  width: 15%;
-
-  max-width: 180px;
-
-  height: 50vh;
-
-  object-fit: cover;
-
-  border-radius: 20px;
-
-  opacity: 0.4;
-
-  cursor: pointer;
-
-  transition: 0.3s;
-}
-
-.side-image:hover {
-
-  opacity: 1;
-
-  transform: scale(1.04);
-}
-
-/* ====================================
-   ARROWS
-==================================== */
-
-.gallery-arrow {
-
-  position: absolute;
-
-  top: 50%;
-
-  transform: translateY(-50%);
-
-  width: 58px;
-  height: 58px;
-
-  border: none;
-
-  border-radius: 50%;
+#gallery {
 
   background:
-    rgba(255,255,255,0.15);
+    linear-gradient(
+      135deg,
+      #f8fafc,
+      #eef4ff
+    );
 
-  backdrop-filter: blur(10px);
-
-  color: white;
-
-  font-size: 32px;
-
-  cursor: pointer;
-
-  z-index: 999999;
-
-  transition: 0.3s;
+  overflow: hidden;
 }
 
-.gallery-arrow:hover {
-
-  background: #36c2d6;
-
-  transform:
-    translateY(-50%)
-    scale(1.08);
-}
-
-.left-arrow {
-
-  left: 20px;
-}
-
-.right-arrow {
-
-  right: 20px;
-}
-
-/* ====================================
-   CLOSE BUTTON
-==================================== */
-
-.close-gallery {
-
-  position: absolute;
-
-  top: 18px;
-  right: 28px;
-
-  border: none;
-
-  background: transparent;
-
-  color: white;
-
-  font-size: 50px;
-
-  cursor: pointer;
-
-  z-index: 999999;
-
-  transition: 0.3s;
-}
-
-.close-gallery:hover {
-
-  transform: scale(1.1);
-}
-
-/* ====================================
-   GALLERY CARD
-==================================== */
+/* =========================================
+   PHOTO CARD
+========================================= */
 
 .photo-item {
 
@@ -2149,9 +2008,9 @@ section {
   height: 100%;
 
   box-shadow:
-    0 10px 30px rgba(0,0,0,0.12);
+    0 12px 30px rgba(0,0,0,0.10);
 
-  transition: 0.4s;
+  transition: 0.4s ease;
 }
 
 .photo-item:hover {
@@ -2168,7 +2027,7 @@ section {
 
   object-fit: cover;
 
-  transition: 0.5s;
+  transition: 0.5s ease;
 }
 
 .photo-item:hover img {
@@ -2176,9 +2035,9 @@ section {
   transform: scale(1.08);
 }
 
-/* ====================================
+/* =========================================
    OVERLAY
-==================================== */
+========================================= */
 
 .photo-overlay {
 
@@ -2190,7 +2049,7 @@ section {
     linear-gradient(
       to top,
       rgba(0,0,0,0.88),
-      rgba(0,0,0,0.15)
+      rgba(0,0,0,0.12)
     );
 
   display: flex;
@@ -2207,15 +2066,18 @@ section {
 
   opacity: 0;
 
-  transition: 0.4s;
+  transition: 0.4s ease;
 }
 
-.photo-item:hover .photo-overlay {
+.photo-item:hover
+.photo-overlay {
 
   opacity: 1;
 }
 
-/* Overlay Icon */
+/* =========================================
+   OVERLAY ICON
+========================================= */
 
 .overlay-icon {
 
@@ -2241,12 +2103,15 @@ section {
   transition: 0.3s;
 }
 
-.photo-item:hover .overlay-icon {
+.photo-item:hover
+.overlay-icon {
 
-  transform: scale(1.12);
+  transform: scale(1.1);
 }
 
-/* Overlay Text */
+/* =========================================
+   OVERLAY TEXT
+========================================= */
 
 .photo-overlay h5 {
 
@@ -2263,7 +2128,7 @@ section {
 
   font-weight: 600;
 
-  opacity: 0.9;
+  opacity: 0.92;
 }
 
 .view-more-text {
@@ -2279,9 +2144,212 @@ section {
   color: #36c2d6;
 }
 
-/* ====================================
+/* =========================================
+   FULLSCREEN VIEWER
+========================================= */
+
+.gallery-viewer {
+
+  position: fixed;
+
+  inset: 0;
+
+  background:
+    rgba(0,0,0,0.96);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
+  gap: 20px;
+
+  z-index: 99999;
+
+  overflow: hidden;
+
+  padding: 20px;
+}
+
+/* =========================================
+   MAIN IMAGE
+========================================= */
+
+.viewer-image {
+
+  width: auto;
+
+  max-width: 78vw;
+
+  height: auto;
+
+  max-height: 78vh;
+
+  object-fit: contain;
+
+  border-radius: 24px;
+
+  box-shadow:
+    0 0 40px rgba(0,0,0,0.55);
+
+  transition: 0.3s ease;
+}
+
+/* =========================================
+   THUMBNAILS
+========================================= */
+
+.thumbnail-wrapper {
+
+  width: 90%;
+
+  display: flex;
+
+  gap: 12px;
+
+  overflow-x: auto;
+
+  justify-content: center;
+
+  padding-bottom: 10px;
+
+  scrollbar-width: none;
+}
+
+.thumbnail-wrapper::-webkit-scrollbar {
+
+  display: none;
+}
+
+.thumbnail {
+
+  width: 95px;
+  height: 75px;
+
+  object-fit: cover;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  opacity: 0.55;
+
+  border:
+    2px solid transparent;
+
+  transition: 0.3s ease;
+
+  flex-shrink: 0;
+}
+
+.thumbnail:hover {
+
+  opacity: 1;
+
+  transform: scale(1.04);
+}
+
+.active-thumb {
+
+  opacity: 1;
+
+  border:
+    2px solid white;
+
+  transform: scale(1.05);
+}
+
+/* =========================================
+   ARROWS
+========================================= */
+
+.gallery-arrow {
+
+  position: absolute;
+
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+
+  width: 58px;
+  height: 58px;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255,255,255,0.14);
+
+  backdrop-filter: blur(10px);
+
+  color: white;
+
+  font-size: 32px;
+
+  cursor: pointer;
+
+  z-index: 999999;
+
+  transition: 0.3s ease;
+}
+
+.gallery-arrow:hover {
+
+  background: #36c2d6;
+
+  transform:
+    translateY(-50%)
+    scale(1.08);
+}
+
+.left-arrow {
+
+  left: 20px;
+}
+
+.right-arrow {
+
+  right: 20px;
+}
+
+/* =========================================
+   CLOSE BUTTON
+========================================= */
+
+.close-gallery {
+
+  position: absolute;
+
+  top: 18px;
+  right: 28px;
+
+  border: none;
+
+  background: transparent;
+
+  color: white;
+
+  font-size: 52px;
+
+  cursor: pointer;
+
+  z-index: 999999;
+
+  transition: 0.3s ease;
+}
+
+.close-gallery:hover {
+
+  transform: scale(1.1);
+}
+
+/* =========================================
    MANAGE BOX
-==================================== */
+========================================= */
 
 .manage-box {
 
@@ -2326,31 +2394,39 @@ section {
   color: #777;
 }
 
-/* ====================================
+/* =========================================
    MOBILE RESPONSIVE
-==================================== */
+========================================= */
 
 @media (max-width: 768px) {
 
   .gallery-viewer {
 
-    gap: 10px;
+    padding: 14px;
 
-    padding: 15px;
+    gap: 14px;
   }
 
   .viewer-image {
 
-    max-width: 94vw;
+    max-width: 95vw;
 
-    max-height: 72vh;
+    max-height: 68vh;
 
     border-radius: 18px;
   }
 
-  .side-image {
+  .thumbnail-wrapper {
 
-    display: none;
+    width: 100%;
+
+    justify-content: flex-start;
+  }
+
+  .thumbnail {
+
+    width: 72px;
+    height: 58px;
   }
 
   .gallery-arrow {
@@ -2376,12 +2452,32 @@ section {
     top: 10px;
     right: 14px;
 
-    font-size: 38px;
+    font-size: 40px;
   }
 
   .photo-item img {
 
     height: 320px;
+  }
+
+  .photo-overlay {
+
+    opacity: 1;
+
+    padding: 20px;
+  }
+
+  .photo-overlay h5 {
+
+    font-size: 1.2rem;
+  }
+
+  .overlay-icon {
+
+    width: 55px;
+    height: 55px;
+
+    font-size: 22px;
   }
 
 }

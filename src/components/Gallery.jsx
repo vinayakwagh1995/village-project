@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import axios from "axios";
 
 function Gallery() {
@@ -280,7 +279,7 @@ function Gallery() {
 
         <div className="gallery-viewer">
 
-          {/* Close */}
+          {/* CLOSE */}
 
           <button
             className="close-gallery"
@@ -293,29 +292,22 @@ function Gallery() {
 
           </button>
 
-          {/* Main Image */}
+          {/* MAIN IMAGE */}
 
           <img
             src={
-              selectedGallery
-                ?.photos?.[
-                currentIndex
-              ]
-
-                ? `${API}/uploads/${
-                    selectedGallery
-                      .photos[
-                      currentIndex
-                    ]
-                  }`
-
-                : "https://via.placeholder.com/600x400"
+              `${API}/uploads/${
+                selectedGallery
+                  .photos[
+                  currentIndex
+                ]
+              }`
             }
             alt=""
             className="viewer-image"
           />
 
-          {/* Left Arrow */}
+          {/* LEFT */}
 
           <button
             className="gallery-arrow left-arrow"
@@ -328,7 +320,7 @@ function Gallery() {
 
           </button>
 
-          {/* Right Arrow */}
+          {/* RIGHT */}
 
           <button
             className="gallery-arrow right-arrow"
@@ -340,6 +332,40 @@ function Gallery() {
             ❯
 
           </button>
+
+          {/* THUMBNAILS */}
+
+          <div className="thumbnail-wrapper">
+
+            {selectedGallery.photos.map(
+              (
+                photo,
+                index
+              ) => (
+
+                <img
+                  key={index}
+                  src={`${API}/uploads/${photo}`}
+                  alt=""
+                  className={
+                    currentIndex ===
+                    index
+
+                      ? "thumbnail active-thumb"
+
+                      : "thumbnail"
+                  }
+                  onClick={() =>
+                    setCurrentIndex(
+                      index
+                    )
+                  }
+                />
+
+              )
+            )}
+
+          </div>
 
         </div>
 
