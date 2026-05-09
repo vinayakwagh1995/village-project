@@ -1,54 +1,66 @@
+import express from "express";
+
+import Gallery from "../models/Gallery.js";
+
+import upload from "../middleware/upload.js";
+
+const router = express.Router();
+
+/* GET GALLERY */
+
+router.get(
+  "/gallery",
+
+  async (req, res) => {
+
+    try {
+
+      const gallery =
+        await Gallery.find();
+
+      res.json(gallery);
+
+    } catch (error) {
+
+      console.log(error);
+
+      res.status(500).json({
+        error: error.message,
+      });
+
+    }
+
+  }
+);
+
+/* ADD GALLERY */
+
 router.post(
+
   "/gallery-add",
+
   upload.array("photos", 20),
 
   async (req, res) => {
 
     try {
 
-      const {
-        title
-      } = req.body;
+      console.log(req.body);
 
-      const photoNames =
-        req.files.map(
-          (file) =>
-            file.filename
-        );
+      console.log(req.files);
 
-      /* FIND EXISTING SECTION */
-
-      let existingGallery =
-        await Gallery.findOne({
-          title,
-        });
-
-      /* IF EXISTS → ADD PHOTOS */
-
-      if (existingGallery) {
-
-        existingGallery.photos.push(
-          ...photoNames
-        );
-
-        await existingGallery.save();
-
-        return res.json({
-          success: true,
-          message:
-            "Photos Added",
-        });
-
-      }
-
-      /* CREATE NEW */
+      const photos =
+        req.files?.map(
+          (file) => file.filename
+        ) || [];
 
       const newGallery =
         new Gallery({
 
-          title,
+          title:
+            req.body.title,
 
-          photos: photoNames,
+          photos,
 
         });
 
@@ -57,7 +69,7 @@ router.post(
       res.json({
         success: true,
         message:
-          "Gallery Created",
+          "Gallery Added",
       });
 
     } catch (error) {
@@ -65,12 +77,12 @@ router.post(
       console.log(error);
 
       res.status(500).json({
-        success: false,
-        error:
-          error.message,
+        error: error.message,
       });
 
     }
 
   }
 );
+
+export default router;
