@@ -17,7 +17,7 @@ function News() {
   const API =
     "https://village-project-z9kk.onrender.com";
 
-  /* Fetch News */
+  /* FETCH NEWS */
 
   useEffect(() => {
 
@@ -29,9 +29,10 @@ function News() {
 
     try {
 
-      const res = await axios.get(
-        `${API}/api/news`
-      );
+      const res =
+        await axios.get(
+          `${API}/api/news`
+        );
 
       setNewsData(res.data);
 
@@ -47,6 +48,14 @@ function News() {
 
   };
 
+  /* CLOSE MODAL */
+
+  const closeModal = () => {
+
+    setSelectedNews(null);
+
+  };
+
   return (
 
     <section
@@ -56,7 +65,7 @@ function News() {
 
       <div className="container">
 
-        {/* Heading */}
+        {/* HEADING */}
 
         <div className="text-center mb-5">
 
@@ -70,13 +79,14 @@ function News() {
 
           <p className="text-muted">
 
-            गावातील नवीन घडामोडी आणि अपडेट्स
+            गावातील नवीन घडामोडी
+            आणि अपडेट्स
 
           </p>
 
         </div>
 
-        {/* Loading */}
+        {/* LOADING */}
 
         {loading ? (
 
@@ -90,91 +100,117 @@ function News() {
 
           <div className="row">
 
-            {newsData.map((news, index) => (
+            {newsData.length > 0 ? (
 
-              <div
-                className="col-lg-4 col-md-6 mb-4"
-                key={index}
-              >
+              newsData.map(
+                (
+                  news,
+                  index
+                ) => (
 
-                <div className="news-card h-100 shadow-sm rounded-4 overflow-hidden">
+                  <div
+                    className="col-xl-4 col-lg-4 col-md-6 mb-4"
+                    key={index}
+                  >
 
-                  {/* News Image */}
+                    <div className="news-card h-100">
 
-                  <img
-                    src={`${API}/uploads/${news.image}`}
-                    alt=""
-                    className="img-fluid w-100"
-                    style={{
-                      height: "220px",
-                      objectFit: "cover",
-                    }}
-                  />
+                      {/* IMAGE */}
 
-                  <div className="card-body d-flex flex-column p-4">
+                      <div
+                        className="overflow-hidden"
+                      >
 
-                    {/* Category */}
+                        <img
+                          src={`${API}/uploads/${news.image}`}
+                          alt=""
+                          className="img-fluid w-100"
+                        />
 
-                    <span className="news-category">
+                      </div>
 
-                      {news.category || "Village News"}
+                      {/* BODY */}
 
-                    </span>
+                      <div className="card-body d-flex flex-column">
 
-                    {/* Title */}
+                        {/* CATEGORY */}
 
-                    <h4 className="card-title mt-3 mb-3">
+                        <span className="news-category">
 
-                      {news.title}
+                          {news.category ||
+                            "Village News"}
 
-                    </h4>
+                        </span>
 
-                    {/* Date */}
+                        {/* TITLE */}
 
-                    <div className="news-meta mb-3">
+                        <h4 className="card-title mt-3 mb-3">
 
-                      <i className="fas fa-calendar-alt me-2"></i>
+                          {news.title}
 
-                      {new Date(
-                        news.createdAt
-                      ).toLocaleDateString()}
+                        </h4>
+
+                        {/* DATE */}
+
+                        <div className="news-meta mb-3">
+
+                          <i className="fas fa-calendar-alt me-2"></i>
+
+                          {new Date(
+                            news.createdAt
+                          ).toLocaleDateString()}
+
+                        </div>
+
+                        {/* DESCRIPTION */}
+
+                        <p className="card-text flex-grow-1">
+
+                          {news.description?.length > 130
+
+                            ? `${news.description.substring(0, 130)}...`
+
+                            : news.description}
+
+                        </p>
+
+                        {/* BUTTON */}
+
+                        <button
+                          className="btn btn-primary rounded-pill mt-3"
+                          onClick={() =>
+                            setSelectedNews(news)
+                          }
+                        >
+
+                          <i className="fas fa-book-open me-2"></i>
+
+                          संपूर्ण वाचा
+
+                        </button>
+
+                      </div>
 
                     </div>
 
-                    {/* Description */}
-
-                    <p className="card-text flex-grow-1">
-
-                      {news.description?.length > 120
-
-                        ? `${news.description.substring(0, 120)}...`
-
-                        : news.description}
-
-                    </p>
-
-                    {/* Button */}
-
-                    <button
-                      className="btn btn-primary rounded-pill mt-3"
-                      onClick={() =>
-                        setSelectedNews(news)
-                      }
-                    >
-
-                      <i className="fas fa-book-open me-2"></i>
-
-                      संपूर्ण वाचा
-
-                    </button>
-
                   </div>
 
-                </div>
+                )
+              )
+
+            ) : (
+
+              <div className="text-center py-5">
+
+                <h4>
+
+                  No News Found
+
+                </h4>
 
               </div>
 
-            ))}
+            )}
 
           </div>
 
@@ -182,54 +218,63 @@ function News() {
 
       </div>
 
-      {/* MODAL */}
+      {/* ===================================
+          MODAL
+      =================================== */}
 
       {selectedNews && (
 
-        <div className="custom-modal-overlay">
+        <div
+          className="custom-modal-overlay"
+          onClick={closeModal}
+        >
 
-          <div className="custom-modal-box">
+          <div
+            className="custom-modal-box"
+            onClick={(e) =>
+              e.stopPropagation()
+            }
+          >
 
-            {/* Close */}
+            {/* CLOSE */}
 
             <button
               className="close-btn"
-              onClick={() =>
-                setSelectedNews(null)
-              }
+              onClick={closeModal}
             >
 
               ×
 
             </button>
 
-            {/* Image */}
+            {/* IMAGE */}
 
             <img
               src={`${API}/uploads/${selectedNews.image}`}
               alt=""
-              className="img-fluid rounded mb-4"
+              className="img-fluid rounded-4 mb-4"
             />
 
-            {/* Category */}
+            {/* CATEGORY */}
 
             <span className="news-category">
 
-              {selectedNews.category || "Village News"}
+              {selectedNews.category ||
+                "Village News"}
 
             </span>
 
-            {/* Title */}
+            {/* TITLE */}
 
-            <h2 className="mt-4 mb-3">
+            <h2 className="fw-bold mt-4 mb-3">
 
               {selectedNews.title}
 
             </h2>
 
-            {/* Date */}
+            {/* DATE */}
 
-            <p className="text-muted">
+            <p className="news-meta mb-4">
 
               <i className="fas fa-calendar-alt me-2"></i>
 
@@ -239,9 +284,9 @@ function News() {
 
             </p>
 
-            {/* Description */}
+            {/* DESCRIPTION */}
 
-            <p className="mt-4 news-full-desc">
+            <p className="news-full-desc">
 
               {selectedNews.description}
 
