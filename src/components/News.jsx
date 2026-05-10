@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import "./style.css";
 function News() {
 
   const [newsData, setNewsData] =
